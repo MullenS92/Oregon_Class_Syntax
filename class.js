@@ -12,18 +12,28 @@
             this.isHealthy = true;
         }
 
+    hunt(){
+        this.food = this.food + 2;
     }
-Traveler.prototype.hunt = function () {
-    this.food = this.food + 2;
+// Traveler.prototype.hunt = function () {
+//     this.food = this.food + 2;
+// }
+    eat(){
+        if(this.food>0){
+            this.food = this.food - 1
+        } else {
+            this.isHealthy = false
+        }
+    }
 }
 
-Traveler.prototype.eat = function () {
-    if (this.food > 0) {
-        this.food = this.food - 1
-    } else {
-    this.isHealthy = false
-    }
-}
+// Traveler.prototype.eat = function () {
+//     if (this.food > 0) {
+//         this.food = this.food - 1
+//     } else {
+//     this.isHealthy = false
+//     }
+//}
 // function Wagon(capacity) {
 //     this.capacity = capacity;
 //     this.passenger = [];
@@ -32,35 +42,65 @@ Traveler.prototype.eat = function () {
          this.capacity = capacity;
          this.passenger = [];
         }
-    }
-
-Wagon.prototype.getAvailableSeatCount = function() {
-    return this.capacity - this.passenger.length;
-}
-
-Wagon.prototype.join = function (Traveler) {
-    if (this.capacity > this.passenger.length) {
-        this.passenger.push (Traveler);
-    } else { console.log("Don't add")
-
-    }
-}
- Wagon.prototype.shouldQuarantine = function() {
-    for (let i =0 ; i < this.passenger.length; i++)
-    { if (this.passenger[i].isHealthy === false){
-        return true 
+        getAvailableSeatCount(){
+           return this.capacity - this.passenger.length;
         }
-    } 
-    return false
- }
 
-Wagon.prototype.totalFood = function() {
-    let food = 0
-    for (let i = 0; i < this.passenger.length; i++){
-        food = food + this.passenger[i].food
-    }
-    return food
-} 
+        join(Traveler){
+            if(this.capacity > this.passenger.length){
+                this.passenger.push(Traveler);
+            }else{
+
+            }
+        }
+        shouldQuarantine(){
+            for (let i =0 ; i < this.passenger.length; i++)
+            { if (this.passenger[i].isHealthy === false){
+                return true 
+                }
+            } 
+            return false
+         } 
+
+         totalFood(){
+            let food = 0
+            for (let i = 0; i < this.passenger.length; i++){
+                food = food + this.passenger[i].food
+            }
+            return food
+        }
+
+        }
+
+// Wagon.prototype.getAvailableSeatCount = function() {
+//     return this.capacity - this.passenger.length;
+// }
+
+// Wagon.prototype.join = function (Traveler) {
+//     if (this.capacity > this.passenger.length) {
+//         this.passenger.push (Traveler);
+//     } else { console.log("Don't add")
+
+//     }
+// }
+//  Wagon.prototype.shouldQuarantine = function() {
+//     for (let i =0 ; i < this.passenger.length; i++)
+//     { if (this.passenger[i].isHealthy === false){
+//         return true 
+//         }
+//     } 
+//     return false
+//  }
+
+       
+
+// Wagon.prototype.totalFood = function() {
+//     let food = 0
+//     for (let i = 0; i < this.passenger.length; i++){
+//         food = food + this.passenger[i].food
+//     }
+//     return food
+// } 
 
 // function Dog (name, breed, isGoodBoy) {
 //     this.name = name;
@@ -88,15 +128,18 @@ class Doctor extends Traveler{
         super(name);
         this.isHealthy = true; 
     }
+    heal(traveler){
+        traveler.isHealthy = true;
+    }
 }
 
-Doctor.prototype = Object.create(Traveler.prototype);
-Doctor.prototype.constructor = Doctor;
+// Doctor.prototype = Object.create(Traveler.prototype);
+// Doctor.prototype.constructor = Doctor;
 
-Doctor.prototype.heal = function (traveler) {
-    traveler.isHealthy = true; 
+// Doctor.prototype.heal = function (traveler) {
+//     traveler.isHealthy = true; 
 
-}
+// }
 
 // function Hunter (name) {
 //     Traveler.call(this, name)
@@ -108,30 +151,49 @@ class Hunter extends Traveler{
         super(name);
         this.food = 2;
     }
-}
+    hunt(){ 
+        this.food = this.food + 5;
+    }
 
-Hunter.prototype = Object.create(Traveler.prototype);
-Hunter.prototype.constructor = Hunter;
-
-Hunter.prototype.hunt = function() {
-    this.food = this.food + 5
-}
-
-Hunter.prototype.eat = function() {
-    if (this.food > 1) {
-        this.food = this.food - 2
-    } else {
-        this.food = 0
-        this.isHealthy = false
+    eat(){
+        if (this.food > 1) {
+            this.food = this.food - 2
+        } else {
+            this.food = 0
+            this.isHealthy = false   
     }
 }
-
-Hunter.prototype.giveFood = function(traveler, numOfFoodUnits) {
-    if (numOfFoodUnits < this.food ) {
-        this.food = this.food - numOfFoodUnits
-        traveler.food = traveler.food + numOfFoodUnits
+    giveFood(traveler,numOfFoodUnits){
+        if (numOfFoodUnits < this.food ) {
+            this.food = this.food - numOfFoodUnits
+            traveler.food = traveler.food + numOfFoodUnits
+        }
     }
+
 }
+
+// Hunter.prototype = Object.create(Traveler.prototype);
+// Hunter.prototype.constructor = Hunter;
+
+// Hunter.prototype.hunt = function() {
+//     this.food = this.food + 5
+// }
+
+// Hunter.prototype.eat = function() {
+//     if (this.food > 1) {
+//         this.food = this.food - 2
+//     } else {
+//         this.food = 0
+//         this.isHealthy = false
+//     }
+// }
+
+// Hunter.prototype.giveFood = function(traveler, numOfFoodUnits) {
+//     if (numOfFoodUnits < this.food ) {
+//         this.food = this.food - numOfFoodUnits
+//         traveler.food = traveler.food + numOfFoodUnits
+//     }
+// }
 
 
 //Transfers numOfFoodUnits from the hunter to a different traveler. If the hunter has less
